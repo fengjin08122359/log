@@ -246,7 +246,7 @@ if(/* @cc_on!@ */0){
         return -1
       }
     };
-    $.arrayUnique = function (th) {
+   var arrayUnique = function (th) {
 	  var n = []; //一个新的临时数组
 	  for(var i = 0; i < th.length; i++) //遍历当前数组
 	  {
@@ -469,7 +469,7 @@ if(/* @cc_on!@ */0){
 			if(this.logArray.length>this.options.maxLength){
 				this.logArray.shift();
 			}
-			if(this.control==0 && this.close==1 && this.curShow(from)){
+			if($('.logBox .list').length>0 && this.control==0 && this.close==1 && this.curShow(from)){
 				$(".logBox .list").append('<div class="logBoxcol">'+HTMLEncode(text)+'</div>');
 				$('.logBox .list')[0].scrollTop = $('.logBox .list')[0].scrollHeight;
 			}
@@ -477,15 +477,17 @@ if(/* @cc_on!@ */0){
 		reuse:function(){
 			var l = this;
 			$(".logBox .list").html("");
+      var html = "";
 			for(var i=0,len=l.logArray.length;i<len;i++){
 				if(l.curShow(l.logArray[i].from)){
-					$(".logBox .list").append('<div class="logBoxcol">'+l.logArray[i].text+'</div>');
+					html +=('<div class="logBoxcol">'+l.logArray[i].text+'</div>');
 				}
 			}
+      $(".logBox .list").append(html);
 		},
 		addCategory:function(from){
 			var l = this;
-			l.from =  $.arrayUnique(l.from.concat(from));
+			l.from =  arrayUnique(l.from.concat(from));
 		},
 		curShow:function(from){
 			var l = this;
@@ -506,7 +508,8 @@ if(/* @cc_on!@ */0){
 		},saveAsFile:function(){
 			var l = this;
       var content = l.getChatContent();
-      var file = new File([content], "日志记录.txt", { type: "text/plain;charset=utf-8" });
+      var timeStr = new Date().getTime();
+      var file = new File([content], "日志记录"+timeStr+".txt", { type: "text/plain;charset=utf-8" });
       saveAs(file);
 		},getChatContent:function(){
 			var l =this;
