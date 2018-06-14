@@ -187,17 +187,6 @@ if (typeof module !== "undefined" && module.exports) {
   });
 }
 /*log.js 日志*/
-var getParameter = function() {
-		var src = location.href;
-		// 解析参数并存储到 settings 变量中
-		var arg = src.indexOf('?') !== -1 ? src.split('?').pop() : '';
-		var settings = {};
-		arg.replace(/(\w+)(?:=([^&]*))?/g, function(a, key, value) {
-		  settings[key] = value;
-		});
-		return settings;
-	}
-;
 var stringify=function(){function a(a){return/["\\\x00-\x1f]/.test(a)&&(a=a.replace(/["\\\x00-\x1f]/g,function(a){var b=e[a];return b?b:(b=a.charCodeAt(),"\\u00"+Math.floor(b/16).toString(16)+(b%16).toString(16))})),'"'+a+'"'}function b(a){var b,c,d,e=["["],f=a.length;for(c=0;f>c;c++)switch(d=a[c],typeof d){case"undefined":case"function":case"unknown":break;default:b&&e.push(","),e.push(stringify(d)),b=1}return e.push("]"),e.join("")}function c(a){return 10>a?"0"+a:a}function d(a){return'"'+a.getFullYear()+"-"+c(a.getMonth()+1)+"-"+c(a.getDate())+"T"+c(a.getHours())+":"+c(a.getMinutes())+":"+c(a.getSeconds())+'"'}var e={"\b":"\\b","       ":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"};return function(c){switch(typeof c){case"undefined":return"undefined";case"number":return isFinite(c)?String(c):"null";case"string":return a(c);case"boolean":return String(c);default:if(null===c)return"null";if(c instanceof Array)return b(c);if(c instanceof Date)return d(c);var e,f,g=["{"],h=stringify;for(var i in c)if(Object.prototype.hasOwnProperty.call(c,i))switch(f=c[i],typeof f){case"undefined":case"unknown":case"function":break;default:e&&g.push(","),e=1,g.push(h(i)+":"+h(f))}return g.push("}"),g.join("")}}}();
 if(/* @cc_on!@ */0){
     JSON = {
@@ -423,55 +412,51 @@ if(/* @cc_on!@ */0){
 			$(".logBox .tools .closebtn").on("click",function(){
 				l.hide();
 			})
-			if(getParameter()["debug"]=="0" || getParameter()["debug"]=="1"){
-				this.show();
-			}
-			if(getParameter()["debug"]!="0" && getParameter()["debug"]!="2"){
-				console.log = function () {
-				    var s = [];
-				    for (var i = 0; i < arguments.length; i++) {
-				    	if((typeof arguments[i]).toLowerCase() == "object"){
+      this.show();
+      console.log = function () {
+          var s = [];
+          for (var i = 0; i < arguments.length; i++) {
+            if((typeof arguments[i]).toLowerCase() == "object"){
 
-				    	}else if((typeof arguments[i]).toLowerCase() == "boolean"||(typeof arguments[i]).toLowerCase() == "number"||(typeof arguments[i]).toLowerCase() == "string"){
-				    		s.push(arguments[i]);
-				    	}
-				    }
-				    l.log("log",s.length==1?s:JSON.stringify(s));
-				};
-				console.warn = function () {
-				    var s = [];
-				    for (var i = 0; i < arguments.length; i++) {
-				    	if((typeof arguments[i]).toLowerCase() == "object"){
+            }else if((typeof arguments[i]).toLowerCase() == "boolean"||(typeof arguments[i]).toLowerCase() == "number"||(typeof arguments[i]).toLowerCase() == "string"){
+              s.push(arguments[i]);
+            }
+          }
+          l.log("log",s.length==1?s:JSON.stringify(s));
+      };
+      console.warn = function () {
+          var s = [];
+          for (var i = 0; i < arguments.length; i++) {
+            if((typeof arguments[i]).toLowerCase() == "object"){
 
-				    	}else if((typeof arguments[i]).toLowerCase() == "boolean"||(typeof arguments[i]).toLowerCase() == "number"||(typeof arguments[i]).toLowerCase() == "string"){
-				    		s.push(arguments[i]);
-				    	}
-				    }
-				    l.log("warn",s.length==1?s:JSON.stringify(s));
-				};
-				console.error = function () {
-				    var s = [];
-				    for (var i = 0; i < arguments.length; i++) {
-				    	if((typeof arguments[i]).toLowerCase() == "object"){
+            }else if((typeof arguments[i]).toLowerCase() == "boolean"||(typeof arguments[i]).toLowerCase() == "number"||(typeof arguments[i]).toLowerCase() == "string"){
+              s.push(arguments[i]);
+            }
+          }
+          l.log("warn",s.length==1?s:JSON.stringify(s));
+      };
+      console.error = function () {
+          var s = [];
+          for (var i = 0; i < arguments.length; i++) {
+            if((typeof arguments[i]).toLowerCase() == "object"){
 
-				    	}else if((typeof arguments[i]).toLowerCase() == "boolean"||(typeof arguments[i]).toLowerCase() == "number"||(typeof arguments[i]).toLowerCase() == "string"){
-				    		s.push(arguments[i]);
-				    	}
-				    }
-				    l.log("error",s.length==1?s:JSON.stringify(s));
-				};
-				console.debug = function () {
-				    var s = [];
-				    for (var i = 0; i < arguments.length; i++) {
-				    	if((typeof arguments[i]).toLowerCase() == "object"){
-				    		s.push(JSON.stringify(arguments[i]));
-				    	}else{
-				    		s.push(arguments[i]);
-				    	}
-				    }
-				    l.log("debug",s.length==1?s:JSON.stringify(s));
-				};
-			}
+            }else if((typeof arguments[i]).toLowerCase() == "boolean"||(typeof arguments[i]).toLowerCase() == "number"||(typeof arguments[i]).toLowerCase() == "string"){
+              s.push(arguments[i]);
+            }
+          }
+          l.log("error",s.length==1?s:JSON.stringify(s));
+      };
+      console.debug = function () {
+          var s = [];
+          for (var i = 0; i < arguments.length; i++) {
+            if((typeof arguments[i]).toLowerCase() == "object"){
+              s.push(JSON.stringify(arguments[i]));
+            }else{
+              s.push(arguments[i]);
+            }
+          }
+          l.log("debug",s.length==1?s:JSON.stringify(s));
+      };
 		},
 		log:function(from,e){
 			var time = new Date().Format("hh:mm:ss");
