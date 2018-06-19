@@ -24,23 +24,32 @@ body{
   padding: 0;
   font-family: "Microsoft YaHei";
   -webkit-text-size-adjust: 100%;
-}  
-.footer{
-  background: red;
-  position:absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}  
+}
 </style>
 </head>
 <body>
-在手机上打开,点击红色区域测试
-<div class="footer" id="message" contenteditable="true"></div>
+<div data-type="log" >log</div>
+<div data-type="warn" >warn</div>
+<div data-type="error" >error</div>
+<div data-type="debug" >debug</div>
 <script src="./jquery.js" type="text/javascript"></script>
 <script src="../log.js" type="text/javascript"></script>
 <script>
 var log = $.log();
+var num = 0;
+$("div").on("click",function(){
+  var type = $(this).data('type')
+  if (type === 'log') {
+    console.log(num)
+  } else if (type === 'warn') {
+    console.warn(num)
+  } else if (type === 'error') {
+    console.error(num)
+  } else {
+    console.debug(num)
+  }
+  num++
+})
 console.log(1)
 </script>
 </body>
