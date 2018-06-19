@@ -616,8 +616,8 @@ if(/* @cc_on!@ */0){
 			var l = this;
       var content = l.getChatContent();
       var timeStr = new Date().getTime();
-      var file = new Blob([content], { type: "text/plain;charset=utf-8" });
-      saveTextAs(file, "日志记录"+timeStr+".txt");
+      //var file = new Blob([content], { type: "text/plain;charset=utf-8" });
+      saveTextAs(content, "日志记录"+timeStr+".txt");
 		},getChatContent:function(){
 			var l =this;
       var content = ''
