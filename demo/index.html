@@ -37,7 +37,7 @@ body{
 <script>
 var log = $.log();
 var num = 0;
-$("div").on("click",function(){
+$("body>div").on("click",function(){
   var type = $(this).data('type')
   if (type === 'log') {
     console.log(num)
