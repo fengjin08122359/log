@@ -471,7 +471,7 @@ if(/* @cc_on!@ */0){
 		from:["all"],
 		curFrom:0,
 		init:function(){
-		  this.insertStyle(".logBox{position:fixed;top:0;left:0;width:60%;height:60%;background:#fff;border:1px solid #000;border-radius:5px;z-index:1000000;display:none;cursor:move}.logBox .tools{position:absolute;top:0;width:80%;height:20px;margin:10px 10%}.logBox .list{position:absolute;top:40px;width:100%;bottom:0;overflow-x:hidden;overflow-y:auto;word-break:break-all}.logBox .tools span{width:20%;box-sizing:border-box;display:inline-block;text-align:center;line-height:20px;background:#e1e1e1;cursor:pointer}.logBoxcol{background:#333;color:#fff}.logBoxcol:nth-child(even){background:#fff;color:#333}")
+		  this.insertStyle(".logBox{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;border:1px solid #000;border-radius:5px;z-index:1000000;display:none;cursor:move}.logBox .tools{position:absolute;top:0;width:80%;height:20px;margin:10px 10%}.logBox .list{position:absolute;top:40px;width:100%;bottom:0;overflow-x:hidden;overflow-y:auto;word-break:break-all}.logBox .tools span{width:20%;box-sizing:border-box;display:inline-block;text-align:center;line-height:20px;background:#e1e1e1;cursor:pointer}.logBoxcol{background:#333;color:#fff}.logBoxcol:nth-child(even){background:#fff;color:#333}")
 			var l =this;
 	  		$(window).error(function(msg, url, line){
 	  			if(msg && msg.originalEvent){
