@@ -484,7 +484,7 @@ if(/* @cc_on!@ */0){
 			if($(".logBox").length>0)return;
 			$("body").append("<div class='logBox'></div>");
 			$(".logBox").append("<div class='tools'><span class='control'>暂停</span><span class='zoom'>缩小</span><span class='from'>all</span><span class='copy'>导出</span><span class='closebtn'>关闭</span></div><div class='list'></div>");
-			$('.logBox').jqDrag();
+			//$('.logBox').jqDrag();
 			$(".logBox .tools .control").on("click",function(){
 				if(l.control==0){
 					l.control = 1;
