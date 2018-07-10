@@ -422,6 +422,10 @@ if(/* @cc_on!@ */0){
         }, function(v) {
           var d = v.data, p = {};
           E = d.e;
+          var t = $(v.target);
+          if (t && t.hasClass("moveable")) {
+            return false;
+          }
           if (E.css('position') != 'relative') {
             try {
               E.position(p);
@@ -483,8 +487,30 @@ if(/* @cc_on!@ */0){
 	  		});
 			if($(".logBox").length>0)return;
 			$("body").append("<div class='logBox'></div>");
-			$(".logBox").append("<div class='tools'><span class='control'>暂停</span><span class='zoom'>缩小</span><span class='from'>all</span><span class='copy'>导出</span><span class='closebtn'>关闭</span></div><div class='list'></div>");
+			$(".logBox").append("<div class='tools'><span class='control'>暂停</span><span class='zoom'>最大</span><span class='from'>all</span><span class='copy'>导出</span><span class='closebtn'>关闭</span></div><div class='list'></div>");
 			$('.logBox').jqDrag();
+      $(".logBox .list").on("touchmove",function(v){
+        var scrollTop = $(".logBox .list").scrollTop();
+        var position = {
+          pX : (v.pageX || v.originalEvent.touches[0].pageX || 0),
+          pY : (v.pageY || v.originalEvent.touches[0].pageY || 0),
+        }
+        if (l.position && l.position.pY) {
+          $(".logBox .list").scrollTop(scrollTop+l.position.pY-position.pY)
+        }
+        return true;
+      })
+      $(".logBox .list").on("touchstart",function(v){
+        l.position = {
+          pX : (v.pageX || v.originalEvent.touches[0].pageX || 0),
+          pY : (v.pageY || v.originalEvent.touches[0].pageY || 0),
+        }
+        return true;
+      })
+      $(".logBox .list").on("touchend",function(v){
+        l.position = {};
+        return true;
+      })
 			$(".logBox .tools .control").on("click",function(){
 				if(l.control==0){
 					l.control = 1;
@@ -498,10 +524,16 @@ if(/* @cc_on!@ */0){
 			$(".logBox .tools .zoom").on("click",function(){
 				if(l.zoom==0){
 					l.zoom = 1;
-					$(".logBox .tools .zoom").html("缩小");
+					$(".logBox .tools .zoom").html("最大");
 					$(".logBox").height("60%");
 					$(".logBox").width("60%");
-				}else{
+				}else if(l.zoom==1){
+					$(".logBox .tools .zoom").html("最小");
+					l.zoom = 2;
+					$(".logBox").width("100%");
+					$(".logBox").height("100%");
+          $(".logBox").css({left:0,top:0})
+				}else {
 					$(".logBox .tools .zoom").html("放大");
 					l.zoom = 0;
 					$(".logBox").width("300px");
@@ -577,7 +609,7 @@ if(/* @cc_on!@ */0){
 				this.logArray.shift();
 			}
 			if($('.logBox .list').length>0 && this.control==0 && this.close==1 && this.curShow(from)){
-				$(".logBox .list").append('<div class="logBoxcol">'+HTMLEncode(text)+'</div>');
+				$(".logBox .list").append('<div class="logBoxcol moveable">'+HTMLEncode(text)+'</div>');
 				$('.logBox .list')[0].scrollTop = $('.logBox .list')[0].scrollHeight;
 			}
 		},
@@ -587,7 +619,7 @@ if(/* @cc_on!@ */0){
       var html = "";
 			for(var i=0,len=l.logArray.length;i<len;i++){
 				if(l.curShow(l.logArray[i].from)){
-					html +=('<div class="logBoxcol">'+l.logArray[i].text+'</div>');
+					html +=('<div class="logBoxcol moveable">'+l.logArray[i].text+'</div>');
 				}
 			}
       $(".logBox .list").append(html);
