@@ -498,6 +498,7 @@ if(/* @cc_on!@ */0){
         if (l.position && l.position.pY) {
           $(".logBox .list").scrollTop(scrollTop+l.position.pY-position.pY)
         }
+        l.position = position
         return true;
       })
       $(".logBox .list").on("touchstart",function(v){
